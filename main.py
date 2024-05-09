@@ -56,6 +56,7 @@ async def update_item(
 """
 
 # Body with multiple examples
+"""
 @app.put("/items/{id}")
 async def update_item(
   id: Annotated[int, Path()],
@@ -66,12 +67,54 @@ async def update_item(
       examples = [{
         "name": "Foo",
         "description": "A very nice Item",
-        "price": 35.4,
-        "tax": 3.2
+        "price": 100.0,
+        "tax": 1.0
       }, {
         "name": "Foo",
-        "price": 35.4
+        "price": 100.0
       }]
+    )
+  ]
+):
+  response = {"id": id, "item": item}
+
+  return response
+"""
+
+# Using the openapi_examples Parameter
+@app.put("/items/{id}")
+async def update_item(
+  id: Annotated[int, Path()],
+  item: Annotated[
+    Item,
+    Body(
+      openapi_examples = {
+        "normal": {
+          "summary": "A normal example",
+          "description": "A **normal** item works correctly.",
+          "value": {
+            "name": "Foo",
+            "description": "A very nice Item",
+            "price": 100.0,
+            "tax": 1.0
+          }
+        },
+        "converted": {
+          "summary": "An example with converted data",
+          "description": "FastAPI can convert price `strings` to actual `numbers` automatically",
+          "value": {
+            "name": "Foo",
+            "price": 100.0
+          }
+        },
+        "invalid": {
+          "summary": "Invalid data is rejected with an error",
+          "value": {
+            "name": "Foo",
+            "price": "one hundred"
+          }
+        }
+      }
     )
   ]
 ):
