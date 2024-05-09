@@ -29,3 +29,10 @@ class Item(BaseModel):
   price: float = Field(examples = [100.0])
   tax: float | None = Field(default = None, examples = [1.0])
 """
+
+# Body with examples¶
+class Item(BaseModel):
+  name: str
+  description: str | None = None
+  price: float
+  tax: float | None = None

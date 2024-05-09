@@ -21,11 +21,34 @@ async def update_item(
 """
 
 # Field additional arguments
-# @app.put("/items/{id}")
-# async def update_item(
-#   id: Annotated[int, Path()],
-#   item: Annotated[Item, Body(embed = True)]
-# ):
-#   response = {"id": id, "item": item}
+"""
+@app.put("/items/{id}")
+async def update_item(
+  id: Annotated[int, Path()],
+  item: Annotated[Item, Body(embed = True)]
+):
+  response = {"id": id, "item": item}
 
-#   return response
+  return response
+"""
+
+# Body with examples
+@app.put("/items/{id}")
+async def update_item(
+  id: Annotated[int, Path()],
+  item: Annotated[
+    Item,
+    Body(
+      embed = True,
+      examples = [{
+        "name": "Item",
+        "description": "A very nice Item",
+        "price": 100.0,
+        "tax": 1.0
+      }]
+    )
+  ]
+):
+  response = {"id": id, "item": item}
+
+  return response
