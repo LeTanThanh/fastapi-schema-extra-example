@@ -33,6 +33,7 @@ async def update_item(
 """
 
 # Body with examples
+"""
 @app.put("/items/{id}")
 async def update_item(
   id: Annotated[int, Path()],
@@ -45,6 +46,31 @@ async def update_item(
         "description": "A very nice Item",
         "price": 100.0,
         "tax": 1.0
+      }]
+    )
+  ]
+):
+  response = {"id": id, "item": item}
+
+  return response
+"""
+
+# Body with multiple examples
+@app.put("/items/{id}")
+async def update_item(
+  id: Annotated[int, Path()],
+  item: Annotated[
+    Item,
+    Body(
+      embed = True,
+      examples = [{
+        "name": "Foo",
+        "description": "A very nice Item",
+        "price": 35.4,
+        "tax": 3.2
+      }, {
+        "name": "Foo",
+        "price": 35.4
       }]
     )
   ]
