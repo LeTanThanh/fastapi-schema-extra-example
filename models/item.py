@@ -1,5 +1,8 @@
 from pydantic import BaseModel
+from pydantic import Field
 
+# Extra JSON Schema data in Pydantic models
+"""
 class Item(BaseModel):
   name: str
   description: str | None = None
@@ -16,3 +19,13 @@ class Item(BaseModel):
       }]
     }
   }
+"""
+
+# Field additional arguments
+"""
+class Item(BaseModel):
+  name: str = Field(examples = ["Item"])
+  description: str | None = Field(default =None, examples = ["A very nice Item"])
+  price: float = Field(examples = [100.0])
+  tax: float | None = Field(default = None, examples = [1.0])
+"""
